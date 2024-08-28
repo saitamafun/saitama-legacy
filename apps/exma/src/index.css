@@ -2,15 +2,22 @@
 @unocss default;
 @unocss;
 
-
 .btn-custom {
-    @apply bg-black text-white px-8 py-2 rounded dark:bg-white dark:text-black;
+  @apply bg-black text-white px-8 py-2 rounded dark:bg-white dark:text-black;
 }
 
 .btn-custom:hover {
-    @apply opacity-75;
+  @apply opacity-75;
 }
 
 .btn-custom:active {
-    @apply opacity-50;
+  @apply opacity-50;
+}
+
+.font-sans {
+  font-family: var(--font-sans)!important;
+}
+
+.font-mono {
+  font-family: var(--font-mono)!important;
 }

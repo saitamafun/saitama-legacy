@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { Open_Sans } from "next/font/google";
+import { Lato, Open_Sans } from "next/font/google";
 import "@saitamafun/wallet/css/index.css";
 
 import "../index.css";
@@ -9,6 +9,13 @@ import type { Metadata } from "next";
 const defaultFont = Open_Sans({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const monoFont = Lato({
+  weight: ["700", "900"],
+  subsets: ["latin"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +39,11 @@ export default function App({ children }: React.PropsWithChildren) {
         />
       </head>
       <body
-        className={clsx(defaultFont.className, "fixed inset-0 flex flex-col")}
+        className={clsx(
+          defaultFont.variable,
+          monoFont.variable,
+          "fixed inset-0 flex flex-col font-sans"
+        )}
       >
         {children}
       </body>
