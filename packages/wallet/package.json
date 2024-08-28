@@ -1,0 +1,98 @@
+{
+  "name": "@saitamafun/wallet",
+  "version": "0.0.0",
+  "private": "true",
+  "main": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "types": "./src/index.tsx",
+      "default": "./src/index.tsx"
+    },
+    "./components/client": {
+      "types": "./src/components/index.tsx",
+      "default": "./src/components/index.tsx"
+    },
+    "./providers/client": {
+      "types": "./src/providers/index.tsx",
+      "default": "./src/providers/index.tsx"
+    },
+    "./providers/server": {
+      "types": "./src/providers/server.tsx",
+      "default": "./src/providers/server.tsx"
+    },
+    "./lib": {
+      "types": "./src/lib/index.ts",
+      "default": "./src/lib/index.ts"
+    },
+    "./css/index.css": {
+      "import": "./dist/index.css",
+      "require": "./dist/index.css",
+      "default": "./dist/index.css"
+    },
+    "./adapter": {
+      "types": "./src/lib/web3/walletAdapter.ts",
+      "import": "./src/lib/web3/walletAdapter.ts",
+      "default": "./src/lib/web3/walletAdapter.ts"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": "https://github.com/saitamafun/saitama",
+  "scripts": {
+    "prepublish": "bun run build",
+    "build": "tsup ./src/index.css --format=cjs,esm --minify"
+  },
+  "dependencies": {
+    "@firebase/app": "^0.10.7",
+    "@firebase/auth": "^1.7.5",
+    "@headlessui/react": "^2.1.2",
+    "@metaplex-foundation/digital-asset-standard-api": "^1.0.4",
+    "@metaplex-foundation/mpl-core": "^1.0.2",
+    "@metaplex-foundation/mpl-core-das": "^0.0.3",
+    "@metaplex-foundation/mpl-token-metadata": "^3.2.1",
+    "@metaplex-foundation/mpl-toolbox": "^0.9.4",
+    "@metaplex-foundation/umi": "^0.9.2",
+    "@metaplex-foundation/umi-bundle-defaults": "^0.9.2",
+    "@solana/spl-token": "^0.4.8",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/web3.js": "^1.95.2",
+    "@solocker/safe-bn": "^0.0.5",
+    "@tanstack/react-query": "^5.51.15",
+    "@types/react": "^18.3.3",
+    "@unocss/reset": "^0.61.5",
+    "bs58": "^6.0.0",
+    "clsx": "^2.1.1",
+    "cookie": "^0.6.0",
+    "formik": "^2.4.6",
+    "next": "^14.2.5",
+    "qr-code-styling": "^1.6.0-rc.1",
+    "react": "^18.3.1",
+    "react-cookie": "^7.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
+    "react-otp-input": "^3.1.1",
+    "react-responsive": "^10.0.0",
+    "xior": "^0.5.5",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/bs58": "^4.0.4",
+    "@types/react-copy-to-clipboard": "^5.0.7",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "@unocss/postcss": "^0.61.5",
+    "postcss": "^8.4.41",
+    "unocss": "^0.61.5",
+    "typescript": "latest"
+  },
+  "optionalDependencies": {
+    "@saitamafun/tsconfig": "*"
+  },
+  "files": [
+    "src/*",
+    "dist/*",
+    "tsconfig.json"
+  ]
+}

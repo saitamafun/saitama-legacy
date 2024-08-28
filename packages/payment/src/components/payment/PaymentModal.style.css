@@ -1,0 +1,11 @@
+.bofoi__btn {
+  background: black;
+  color: white;
+  padding: 8px 0;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

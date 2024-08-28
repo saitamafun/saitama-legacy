@@ -1,0 +1,8 @@
+{
+  "extends": "@saitamafun/tsconfig/web",
+  "compilerOptions": {
+    "rootDir": "./src"
+  },
+  "include": ["src", "../../apps/fubuki/src/composables/useWalletList.ts"],
+  "exclude": ["node_modules"]
+}

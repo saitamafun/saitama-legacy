@@ -1,0 +1,43 @@
+{
+  "name": "@saitamafun/wallet-connect",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.tsx",
+      "default": "./src/index.tsx"
+    },
+    "./css/index.css": {
+      "import": "./dist/index.css",
+      "require": "./dist/index.css",
+      "default": "./dist/index.css"
+    }
+  },
+  "scripts": {
+    "prepublish": "bun run build",
+    "build": "tsup src/index.css --minify"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.1.2",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/web3.js": "^1.95.2",
+    "react": "^18.3.1"
+  },
+  "optionalDependencies": {
+    "@saitamafun/tsconfig": "*"
+  },
+  "devDependencies": {
+    "unocss": "^0.61.9",
+    "@types/react": "^18.3.3",
+    "autoprefixer": "^10.4.20",
+    "typescript": "latest",
+    "postcss": "^8.4.41"
+  },
+  "files": [
+    "tsconfig.json",
+    "dist/*",
+    "src/*",
+    "bun.lockb"
+  ]
+}

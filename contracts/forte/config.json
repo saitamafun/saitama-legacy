@@ -1,0 +1,28 @@
+{
+  "tokenStandard": "nft",
+  "number": 5000,
+  "symbol": "SAITAMA",
+  "sellerFeeBasisPoints": 5,
+  "isMutable": true,
+  "isSequential": false,
+  "creators": [
+    {
+      "address": "8yrLUREzVZ47fqLZ2jBSqBdsUivSeEy8GaqY8WVvd3Nc",
+      "share": 100
+    }
+  ],
+  "uploadMethod": "bundlr",
+  "ruleSet": null,
+  "awsConfig": null,
+  "sdriveApiKey": null,
+  "nftStorageAuthToken": null,
+  "shdwStorageAccount": null,
+  "pinataConfig": null,
+  "hiddenSettings": {
+    "name": "SAITAMA $ID+1$",
+    "uri": "https://arweave.net/v9XSY8FfcUp3Tl75m__GSoRXKkgZ6XgpLrEnCJ2TELY",
+    "hash": "92KDT1GcMQJZFg2Sh5DkbG5a1CVsdk2x"
+  },
+  "guards": null,
+  "maxEditionSupply": null
+}

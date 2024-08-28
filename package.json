@@ -1,0 +1,23 @@
+{
+  "name": "saitamafun",
+  "private": "true",
+  "version": "0.0.0",
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "clean": "rimraf -rf node_modules .turbo dist out */*/.turbo */packages/dist */*/.next */*/node_modules"
+  },
+  "dependencies": {
+    "@tsconfig/bun": "^1.0.7",
+    "@tsconfig/recommended": "^1.0.7",
+    "next": "^14.2.5",
+    "tsup": "^8.2.4",
+    "turbo": "^2.0.12",
+    "typescript": "latest"
+  },
+  "workspaces": [
+    "contracts/*",
+    "packages/*",
+    "apps/*",
+    "servers/*"
+  ]
+}

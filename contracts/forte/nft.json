@@ -1,0 +1,21 @@
+{
+  "mint": {
+    "name": "Saitama",
+    "symbol": "SAITAMA",
+    "uri": "https://arweave.net/v9XSY8FfcUp3Tl75m__GSoRXKkgZ6XgpLrEnCJ2TELY",
+    "sellerFeeBasisPoints": {
+      "percent": 5
+    },
+    "printSupply": {
+      "type": "Limited",
+      "limit": 5000
+    },
+    "creators": [
+      {
+        "address": "8yrLUREzVZ47fqLZ2jBSqBdsUivSeEy8GaqY8WVvd3Nc",
+        "share": 100,
+        "verified": false
+      }
+    ]
+  }
+}

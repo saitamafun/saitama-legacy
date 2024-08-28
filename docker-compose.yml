@@ -1,0 +1,43 @@
+version: '3'
+services:
+  blast:
+    build: ./servers/blast
+    secrets:
+      - PORT=
+      - HOST=
+      - DATABASE_URL=
+      - SECRET_KEY=
+      - ALLOWED_HOSTS=
+      - PYTH_ENDPOINT_URL=
+      - SAITAMA_PAYMENT_SECRET_KEY=
+  kamikaze:
+    build: ./servers/kamikaze
+    secrets:
+      - PORT=
+      - HOST=
+      - DATABASE_URL=
+      - SECRET_KEY=
+      - RPC_URL=
+      - WS_URL=
+      - PYTH_ENDPOINT_URL=
+      - FIREBASE_SERVICE_ACCOUNT
+  exma:
+    build: ./apps/exma
+    secrets:
+      - NEXT_PUBLIC_SAITAMA_API_URL=
+      - NEXT_PUBLIC_SAITAMA_ACCESS_TOKEN=
+      - NEXT_PUBLIC_RPC_URL=
+      - SAITAMA_API_URL=
+      - SAITAMA_ACCESS_TOKEN=
+      - RPC_URL=
+  fubuki:
+    build: ./apps/fubuki
+    secrets:
+      - API_BASE_URL=
+      - NEXT_PUBLIC_API_BASE_URL=
+      - NEXT_PUBLIC_SAITAMA_API_URL=
+      - NEXT_PUBLIC_SAITAMA_ACCESS_TOKEN=
+      - NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=
+      - NEXT_PUBLIC_UNSPLASH_SECRET_KEY=
+    expose:
+      - 3000:3000

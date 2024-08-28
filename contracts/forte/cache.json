@@ -1,0 +1,18 @@
+{
+  "program": {
+    "candyMachine": "D6pKzciPLRHH1Hiv4J4f6DzenGeMQ5MvWkiFE2cqcA1Z",
+    "candyGuard": "",
+    "candyMachineCreator": "7jfFYpCdAr774zHThsLbqDRRbMygMTvXRmhdUutgSU95",
+    "collectionMint": "EeH7deu2MhE6oJ3roEjr3xDkofkQrALXCnDUEACSGwmF"
+  },
+  "items": {
+    "-1": {
+      "name": "Saitama",
+      "image_hash": "3a15604a8ad00bd01127a673d6258f46e8c3bb6eb91e4c6bd95a1466df804e6b",
+      "image_link": "https://arweave.net/fdn7mF0nHw9yYtVqFYNl3YDqwglsy5zmGwd8OvHUGYw?ext=png",
+      "metadata_hash": "538da62046307756cb25f52ea7fe2be78924189554544f1e499cfcb0b4676bed",
+      "metadata_link": "https://arweave.net/v9XSY8FfcUp3Tl75m__GSoRXKkgZ6XgpLrEnCJ2TELY",
+      "onChain": true
+    }
+  }
+}

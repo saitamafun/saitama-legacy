@@ -1,0 +1,71 @@
+@import "@unocss/reset/tailwind.css";
+
+@unocss preflights;
+@unocss default;
+
+.input:focus-within {
+    --at-apply:  border-black dark:border-white;
+}
+
+.input:focus-within svg {
+ --at-apply:  text-black dark:text-white;
+}
+
+.btn {
+    @apply  !flex !items-center !justify-center;
+}
+
+.btn-primary {
+    @apply !bg-black !text-white !rounded-md !dark:bg-white !dark:text-black;
+}
+
+.btn-primary:active {
+    @apply !bg-black/50 !dark:bg-white/80;
+}
+
+.btn-primary:hover {
+    @apply !bg-black/80 !dark:bg-white/90;
+}
+
+.btn-secondary {
+    @apply !bg-black/10 !dark:bg-dark-300/80 rounded-md;
+}
+
+.btn-secondary:active {
+   @apply !bg-black/5 !dark:bg-dark-300/50;
+}
+
+.btn-secondary:hover {
+   @apply !bg-black/8 !dark:bg-dark-300;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+*:focus {
+    outline: none;
+}
+
+.tab {
+    @apply flex-1  p-2   rounded data-[selected]:!bg-black data-[selected]:text-white data-[selected]:dark:!bg-white data-[selected]:dark:text-black;
+}
+  
+.tab-list {
+    @apply flex !bg-black/5 text-black/75 rounded  dark:!bg-dark-300 dark:text-white/75;
+}
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+*::-webkit-scrollbar {
+    display: none;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "watchdog",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsup index.ts --format cjs --minify --treeshake",
+    "start": "bun dist/index.cjs",
+    "dev": "bun x nodemon --exec bun run src/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "dependencies": {
+    "kamikaze": "*",
+    "@saitamafun/tsconfig": "*"
+  },
+  "peerDependencies": {
+    "typescript": "latest"
+  }
+}

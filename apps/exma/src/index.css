@@ -1,0 +1,16 @@
+@unocss preflights;
+@unocss default;
+@unocss;
+
+
+.btn-custom {
+    @apply bg-black text-white px-8 py-2 rounded dark:bg-white dark:text-black;
+}
+
+.btn-custom:hover {
+    @apply opacity-75;
+}
+
+.btn-custom:active {
+    @apply opacity-50;
+}
