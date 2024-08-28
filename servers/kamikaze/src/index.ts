@@ -151,21 +151,18 @@ const createFastifyInstance = () => {
   return fastify;
 };
 
-type InitializeFastifyArgs = {
-  port?: number;
-  host?: string;
-};
-
-export const initializeFastify = ({
-  port,
-  host,
-}: InitializeFastifyArgs = {}) => {
+async function main() {
   const fastify = createFastifyInstance();
-  registerRoutes(fastify);
-  return fastify.listen({ port, host });
-};
 
-initializeFastify({
-  port: Number(process.env.PORT!),
-  host: process.env.HOST!,
-}).catch(console.log);
+  registerRoutes(fastify);
+
+  const tasks: Promise<any>[] = [];
+
+  tasks.push(
+    fastify.listen({ port: Number(process.env.PORT!), host: process.env.HOST! })
+  );
+
+  await Promise.all(tasks);
+}
+
+main().catch(console.log);

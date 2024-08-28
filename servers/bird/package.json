@@ -1,0 +1,29 @@
+{
+  "name": "bird",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsup src/index.ts src/external.ts --format cjs --minify --treeshake",
+    "start": "node dist/index.cjs",
+    "dev": "bun x nodemon --exec bun run src/index.ts",
+    "migrate": "npx drizzle-kit generate && npx drizzle-kit migrate"
+  },
+  "devDependencies": {
+    "@saitamafun/tsconfig": "*",
+    "@types/bun": "latest",
+    "drizzle-kit": "^0.22.7"
+  },
+  "peerDependencies": {
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@saitamafun/wallet": "*",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
+    "drizzle-zod": "^0.5.1",
+    "fastify": "^4.28.1",
+    "postgres": "^3.4.4",
+    "telegraf": "^4.16.3",
+    "zod": "^3.20.2"
+  }
+}

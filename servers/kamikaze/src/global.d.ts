@@ -6,7 +6,6 @@ import type {
   MetadataAccountData,
 } from "@metaplex-foundation/mpl-token-metadata";
 
-import type { apps } from "./db/schema";
 import type {
   selectAppSchema,
   selectAuthUserSchema,
