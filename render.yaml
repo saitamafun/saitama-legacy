@@ -23,6 +23,8 @@ services:
     runtime: node
     plan: starter
     autoDeploy: true
+    buildCommand: bun run build
+    startCommand: bun run migrate && bun run start
     buildFilter:
       paths:
         - servers/bird/**/*.ts
