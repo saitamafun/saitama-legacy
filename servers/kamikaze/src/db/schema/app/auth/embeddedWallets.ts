@@ -14,6 +14,6 @@ export const embeddedWallets = pgTable("embeddedWallets", {
   id: uuid("id").defaultRandom().primaryKey(),
   hash: text("hash").$defaultFn(createWallet).notNull(),
   user: uuid("user")
-    .references(() => authUsers.uid, { onDelete: "cascade" })
+    .references(() => authUsers.id, { onDelete: "cascade" })
     .notNull(),
 });

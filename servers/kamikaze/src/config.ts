@@ -6,3 +6,4 @@ export const PYTH_ENDPOINT_URL = process.env.PYTH_ENDPOINT_URL!;
 export const FIREBASE_SERVICE_ACCOUNT = process.env.FIREBASE_SERVICE_ACCOUNT!;
 export const RPC_URL = process.env.RPC_URL!;
 export const WS_URL = process.env.WS_URL!;
+export const TELEGRAM_ACCESS_TOKEN = process.env.TELEGRAM_ACCESS_TOKEN!;

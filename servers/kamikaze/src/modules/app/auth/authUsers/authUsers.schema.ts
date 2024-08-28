@@ -23,3 +23,7 @@ export const safeAuthUserSchema = selectAuthUserSchema.pick({
   lastLogin: true,
   createdAt: true,
 });
+
+export const telegramAuthenticationSchema = z.object({
+  initDataRaw: z.string(),
+});

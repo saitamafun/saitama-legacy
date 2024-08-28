@@ -19,7 +19,7 @@ import {
 } from "./embededWallets.controller";
 
 const getEmbeddedWalletsRoute = async (req: FastifyRequest) => {
-  const wallets = await getEmbeddedWalletsByUser(req.user!.uid);
+  const wallets = await getEmbeddedWalletsByUser(req.user!.id);
 
   return wallets
     .map((wallet) => new Wallet(wallet))
@@ -41,7 +41,7 @@ const sendTransactionRoute = (
         .then(async ({ rpcEndpoint, ...body }) => {
           const connection = new Connection(rpcEndpoint);
           const embeddedWallet = await getEmbeddedWalletByUserAndId(
-            req.user!.uid,
+            req.user!.id,
             id
           );
 

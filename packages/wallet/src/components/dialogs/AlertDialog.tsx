@@ -41,7 +41,7 @@ export default function AlertDialog({
       onClose={() => {
         if (setOpen) setOpen(false);
       }}
-      className="relative font-sans text-sm z-50"
+      className="relative text-sm z-50"
     >
       <DialogBackdrop className="fixed inset-0 bg-black/10 backdrop-blur-md dark:bg-white/10" />
       <div className="fixed inset-0 flex flex-col">

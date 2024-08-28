@@ -19,17 +19,17 @@ export type VerificationData = EmailVerification;
 export const authUsers = pgTable(
   "authUsers",
   {
-    uid: uuid("uid").defaultRandom().primaryKey(),
-    id: text("id").notNull(),
+    id: uuid("id").defaultRandom().primaryKey(),
+    uid: text("uid").notNull(), // unique in 1st or 3rd party context 
     email: text("email"),
     provider: text("provider").notNull(),
     auth: uuid("auth")
       .references(() => auths.id, { onDelete: "cascade" })
       .notNull(),
-    verificationData: json("verification_data").$type<VerificationData>(),
     isVerified: boolean("is_verified").default(false).notNull(),
     lastLogin: timestamp("last_login").defaultNow().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
+    verificationData: json("verification_data").$type<VerificationData>(),
   },
   (columns) => ({
     unique_id_auth: unique("unique_id_auth").on(columns.id, columns.auth),

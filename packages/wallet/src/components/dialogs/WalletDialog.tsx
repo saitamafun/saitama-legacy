@@ -5,7 +5,7 @@ import type { DigitalAssetWithToken } from "@metaplex-foundation/mpl-token-metad
 
 import { AiOutlineSwap } from "react-icons/ai";
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { MdAdd, MdArrowOutward, MdSettings } from "react-icons/md";
+import { MdAdd, MdArrowOutward } from "react-icons/md";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 
 import { useWallet } from "../../composables";
@@ -23,6 +23,8 @@ import AlertDialog from "./AlertDialog";
 import { FundDialog } from "./FundDialog";
 import SendTokenDialog from "./SendTokenDialog";
 import { SelectTokenDialog } from "./SelectTokenDialog";
+import SwapTokenDialog from "./SwapTokenDialog";
+import WalletSettings from "../WalletSettings";
 
 type WalletDialogProps = {
   open?: boolean;
@@ -62,11 +64,7 @@ export function WalletDialog({ open, setOpen }: WalletDialogProps) {
       setOpen={setOpen}
       title="Digital Wallet"
       className="h-xl overflow-y-scroll"
-      actions={
-        <button>
-          <MdSettings className="text-2xl text-black/75 dark:text-white/75" />
-        </button>
-      }
+      actions={<WalletSettings />}
     >
       {loading ? (
         <section className="flex-1 flex flex-col  space-y-4 pb-4 overflow-y-scroll">
@@ -109,7 +107,7 @@ type ActionProps = {
   portfolio?: DigitalAssetWithToken[];
 };
 
-function SendCryptoAction() {
+function SendAction() {
   const [open, setOpen] = useState(false);
   const [digitalAssetWithToken, setDigitalAssetWithToken] =
     useState<DigitalAssetWithToken | null>(null);
@@ -141,7 +139,7 @@ function SendCryptoAction() {
   );
 }
 
-function AddCryptoAction({ wallet }: ActionProps) {
+function FundAction({ wallet }: ActionProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -164,6 +162,28 @@ function AddCryptoAction({ wallet }: ActionProps) {
   );
 }
 
+function SwapAction() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <div
+        className="flex flex-col items-center justify-center space-y-1"
+        onClick={() => setOpen(true)}
+      >
+        <button className="bg-white  text-black p-2 rounded-full">
+          <AiOutlineSwap className="text-lg" />
+        </button>
+        <small>Swap</small>
+      </div>
+      <SwapTokenDialog
+        open={open}
+        setOpen={setOpen}
+      />
+    </>
+  );
+}
+
 function WalletActionCard({ wallet }: ActionProps) {
   return (
     <div className="flex flex-col  space-y-4 bg-gradient-to-r from-violet-500 to-cyan-500 text-white px-4 pt-4 pb-2 rounded-md dark:from-violet-300 dark:to-cyan-300 dark:text-black">
@@ -171,14 +191,9 @@ function WalletActionCard({ wallet }: ActionProps) {
         <h1 className="text-4xl font-extrabold font-mono">$0.00</h1>
       </div>
       <div className="self-center flex items-center space-x-4">
-        <SendCryptoAction />
-        <AddCryptoAction wallet={wallet} />
-        <div className="flex flex-col items-center justify-center space-y-1">
-          <button className="bg-white  text-black p-2 rounded-full">
-            <AiOutlineSwap className="text-lg" />
-          </button>
-          <small>Swap</small>
-        </div>
+        <SendAction />
+        <FundAction wallet={wallet} />
+        <SwapAction />
       </div>
     </div>
   );

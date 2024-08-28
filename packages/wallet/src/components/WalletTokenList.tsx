@@ -43,7 +43,7 @@ const WalletToken = ({
 
       <div className="flex-1">
         <p className="text-md font-medium">{metadata.name}</p>
-        <p className="text-xs font-mono text-black/75 dark:text-white/75">
+        <p className="text-xs text-black/75 dark:text-white/75">
           {toUIAmount(token.amount, mint.decimals)} {metadata.symbol}
         </p>
       </div>

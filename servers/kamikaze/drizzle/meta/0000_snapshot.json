@@ -1,5 +1,5 @@
 {
-  "id": "56f70d60-462d-42a6-a548-fc5d3ea63bb0",
+  "id": "e3022e85-4152-45c2-964e-a10e93411a0f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -362,15 +362,15 @@
       "name": "authUsers",
       "schema": "",
       "columns": {
-        "uid": {
-          "name": "uid",
+        "id": {
+          "name": "id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "id": {
-          "name": "id",
+        "uid": {
+          "name": "uid",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -393,12 +393,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "verification_data": {
-          "name": "verification_data",
-          "type": "json",
-          "primaryKey": false,
-          "notNull": false
-        },
         "is_verified": {
           "name": "is_verified",
           "type": "boolean",
@@ -419,6 +413,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "verification_data": {
+          "name": "verification_data",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -530,15 +530,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "embeddedWallets_user_authUsers_uid_fk": {
-          "name": "embeddedWallets_user_authUsers_uid_fk",
+        "embeddedWallets_user_authUsers_id_fk": {
+          "name": "embeddedWallets_user_authUsers_id_fk",
           "tableFrom": "embeddedWallets",
           "tableTo": "authUsers",
           "columnsFrom": [
             "user"
           ],
           "columnsTo": [
-            "uid"
+            "id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"

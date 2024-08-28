@@ -33,7 +33,7 @@ export const createOrReturnAuthUser = (
       const [auth] = authList;
       const userExists = await tx.query.authUsers.findFirst({
         columns: { id: true },
-        where: and(eq(authUsers.id, values.id), eq(authUsers.auth, auth.id)),
+        where: and(eq(authUsers.uid, values.uid), eq(authUsers.auth, auth.id)),
       });
 
       const [authUser] = await tx
@@ -48,7 +48,7 @@ export const createOrReturnAuthUser = (
       if (!userExists)
         await tx
           .insert(embeddedWallets)
-          .values({ user: authUser.uid })
+          .values({ user: authUser.id })
           .returning();
 
       return authUser;
@@ -82,12 +82,12 @@ export const getAuthUsersByApp = (
       .innerJoin(qAuths, eq(qAuths.authId, authUsers.auth));
   });
 
-export const getAuthUserByAppAndId = (appId: string, id: string) =>
+export const getAuthUserByAppAndId = (app: string, id: string) =>
   Application.instance.db.transaction(async (tx) => {
     const qAuths = tx
       .select({ id: as(auths.id, "authId"), appId: as(apps.id, "appId") })
       .from(auths)
-      .innerJoin(apps, eq(apps.id, appId))
+      .innerJoin(apps, eq(apps.id, app))
       .as("qAuths");
 
     return tx
@@ -96,14 +96,14 @@ export const getAuthUserByAppAndId = (appId: string, id: string) =>
         app: qAuths.appId,
       })
       .from(authUsers)
-      .where(and(eq(authUsers.uid, id)))
+      .where(and(eq(authUsers.id, id)))
       .innerJoin(qAuths, eq(qAuths.id, authUsers.auth));
   });
 
 export const getAuthUserById = async (id: string) => {
   const authUser = await Application.instance.db.query.authUsers
     .findFirst({
-      where: and(eq(authUsers.uid, id)),
+      where: and(eq(authUsers.id, id)),
       with: {
         auth: {
           with: {
@@ -171,30 +171,30 @@ export const deleteAuthUserByAppAndId = (appId: string, id: string) =>
       .returning();
   });
 
-export const getAuthUserByAppAndId2 = (appId: string, id: string) =>
+export const getAuthUserByAppAndUId = (app: string, id: string) =>
   Application.instance.db.transaction(async (tx) => {
     const qAuths = tx
-      .select({ id: as(auths.id, "authId"), appId: as(apps.id, "appId") })
+      .select({ id: as(auths.id, "authId"), app: as(apps.id, "appId") })
       .from(auths)
-      .innerJoin(apps, eq(apps.id, appId))
+      .innerJoin(apps, eq(apps.id, app))
       .as("qAuths");
 
     return tx
       .select({
         ...getTableColumns(authUsers),
-        app: qAuths.appId,
+        app: qAuths.app,
       })
       .from(authUsers)
-      .where(and(eq(authUsers.id, id)))
+      .where(and(eq(authUsers.uid, id)))
       .innerJoin(qAuths, eq(qAuths.id, authUsers.auth));
   });
 
-export const confirmVerificationData = async (
+export const confirmVerificationDataByUId = async (
   appId: string,
-  id: string,
+  uid: string,
   verificationData: Partial<Omit<VerificationData, "ttl">>
 ) => {
-  const [authUser] = await getAuthUserByAppAndId2(appId, id);
+  const [authUser] = await getAuthUserByAppAndUId(appId, uid);
 
   if (verificationData.code && authUser.provider === "email+otp") {
     if (

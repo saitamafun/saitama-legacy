@@ -5,10 +5,10 @@ import { Api, AuthUserApi } from "../lib";
 import type { OTPForm } from "../forms/OTPForm";
 import type { EmailSignInForm } from "../forms/EmailForm";
 
-const tryNext = import("next/headers").catch(() => undefined);
+const tryNextHeader = import("next/headers").catch(() => undefined);
 
 const setCookies = async (cookies: string[]) => {
-  const next = await tryNext;
+  const next = await tryNextHeader;
   if (next)
     for (const serialized of cookies) {
       const [[key, value]] = Object.entries(cookie.parse(serialized));
@@ -19,6 +19,18 @@ const setCookies = async (cookies: string[]) => {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       });
     }
+};
+
+export const getTma = async () => {
+  const next = await tryNextHeader;
+
+  if (next) {
+    const pathname = next.headers().get("x-current-pathname");
+    if (pathname) {
+      const [, telegramInitData] = pathname.split(/#tgWebAppData/);
+      return telegramInitData;
+    }
+  }
 };
 
 export const processEmailSignInForm = async (
@@ -74,7 +86,8 @@ export const processTransaction = async (
   rpcEndpoint: string,
   ...[baseURL, token, cookie]: ConstructorParameters<typeof AuthUserApi>
 ) => {
-  const next = await tryNext;
+  const next = await tryNextHeader;
+
   const api = new AuthUserApi(
     baseURL,
     token,

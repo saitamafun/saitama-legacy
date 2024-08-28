@@ -64,8 +64,10 @@ export const insertAuthUserSchema = createInsertSchema(authUsers, {
   email: (column) => column.email.email(),
   verificationData: () => z.object({ code: z.string(), ttl: z.number() }),
 }).omit({
-  createdAt: true,
+  id: true,
   auth: true,
+  isVerified: true,
+  createdAt: true,
 });
 
 export const selectEmbededWalletSchema = createSelectSchema(embeddedWallets);

@@ -70,7 +70,7 @@ export const embeddedWalletsRelations = relations(
   ({ one }) => ({
     user: one(authUsers, {
       fields: [embeddedWallets.user],
-      references: [authUsers.uid],
+      references: [authUsers.id],
     }),
   })
 );

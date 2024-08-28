@@ -23,6 +23,10 @@ export class AuthApi extends ApiImpl {
     });
   }
 
+  telegramAuthentication(tma: string){
+    return this.xior.post<TokenWithUser>(this.buildPath("telegram"), {initDataRaw: tma})
+  }
+
   /**
    *
    * @param id

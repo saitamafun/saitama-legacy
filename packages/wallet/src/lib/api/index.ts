@@ -11,18 +11,13 @@ export class Api {
 
   private readonly xior: XiorInstance;
 
-  constructor(
-    readonly baseURL: string,
-    readonly token: string,
-    readonly cookie?: string
-  ) {
+  constructor(readonly baseURL: string, readonly token: string) {
     this.xior = xior.create({
       baseURL,
       credentials: "include",
       mode: "cors",
       headers: {
-        Cookie: cookie,
-        Authorization: this.token ? "Bearer " + this.token : undefined,
+        Authorization: "Bearer" + this.token,
       },
     });
 

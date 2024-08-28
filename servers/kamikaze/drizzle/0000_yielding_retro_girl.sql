@@ -51,15 +51,15 @@ CREATE TABLE IF NOT EXISTS "wallets" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "authUsers" (
-	"uid" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"id" text NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"uid" text NOT NULL,
 	"email" text,
 	"provider" text NOT NULL,
 	"auth" uuid NOT NULL,
-	"verification_data" json,
 	"is_verified" boolean DEFAULT false NOT NULL,
 	"last_login" timestamp DEFAULT now() NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
+	"verification_data" json,
 	CONSTRAINT "unique_id_auth" UNIQUE("id","auth")
 );
 --> statement-breakpoint
@@ -122,7 +122,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "embeddedWallets" ADD CONSTRAINT "embeddedWallets_user_authUsers_uid_fk" FOREIGN KEY ("user") REFERENCES "public"."authUsers"("uid") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "embeddedWallets" ADD CONSTRAINT "embeddedWallets_user_authUsers_id_fk" FOREIGN KEY ("user") REFERENCES "public"."authUsers"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

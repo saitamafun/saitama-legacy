@@ -3,10 +3,11 @@ import jsonwebtoken from "jsonwebtoken";
 import passport from "@fastify/passport";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-import { SECRET_KEY } from "@/config";
+import { SECRET_KEY, TELEGRAM_ACCESS_TOKEN } from "@/config";
 import { Firebase } from "@/lib/firebase";
 import { generateRandomInt } from "@/lib/utils";
 import { requestErrorHandler } from "@/lib/errorHandler";
+import { validateAsync } from "@/lib/telegramAuthStrategy";
 import {
   LimitOffsetPagination,
   limitOffsetPaginationSchema,
@@ -14,7 +15,7 @@ import {
 import { insertAuthUserSchema, selectAuthUserById } from "@/db/zod";
 
 import {
-  confirmVerificationData,
+  confirmVerificationDataByUId,
   createOrReturnAuthUser,
   deleteAuthUserByAppAndId,
   getAuthUserByAppAndId,
@@ -26,6 +27,7 @@ import {
   emailAuthenticationSchema,
   emailVerificationSchema,
   safeAuthUserSchema,
+  telegramAuthenticationSchema,
 } from "./authUsers.schema";
 
 const authenticateRoute = async (
@@ -42,7 +44,7 @@ const authenticateRoute = async (
         {
           email: firebaseUser.email,
           lastLogin: new Date(firebaseUser.auth_time),
-          id: firebaseUser.uid,
+          uid: firebaseUser.uid,
           provider: firebaseUser.firebase.sign_in_provider, /// To deny custom users from using this route
         }
       );
@@ -173,9 +175,8 @@ const emailSignInRoute = (req: FastifyRequest, reply: FastifyReply) =>
         {
           ...body,
           verificationData,
-          id: firebaseUser.uid,
+          uid: firebaseUser.uid,
           provider: "email+otp",
-          isVerified: firebaseUser.emailVerified,
         }
       );
 
@@ -195,7 +196,7 @@ const emailVerificationRoute = async (
     .parseAsync(req.body)
     .then(async ({ email, ...body }) => {
       const firebaseUser = await Firebase.instance.auth.getUserByEmail(email);
-      const user = await confirmVerificationData(
+      const user = await confirmVerificationDataByUId(
         req.user!.app!.id,
         firebaseUser.uid,
         body
@@ -203,7 +204,7 @@ const emailVerificationRoute = async (
 
       if (user) {
         const token = jsonwebtoken.sign(
-          { userId: user.uid, appId: req.user!.app!.id, isVerified: true },
+          { userId: user.id, appId: req.user!.app!.id, isVerified: true },
           SECRET_KEY
         );
 
@@ -217,6 +218,50 @@ const emailVerificationRoute = async (
 
       return reply.status(404).send({
         message: "Invalid verification code",
+      });
+    })
+    .catch(requestErrorHandler(reply));
+
+const telegramAuthenticationRoute = async (
+  req: FastifyRequest<{ Body: z.infer<typeof telegramAuthenticationSchema> }>,
+  reply: FastifyReply
+) =>
+  telegramAuthenticationSchema
+    .parseAsync(req.body)
+    .then(async ({ initDataRaw }) => {
+      console.log("telegram=", initDataRaw);
+      const parsedInitData = await validateAsync(
+        TELEGRAM_ACCESS_TOKEN,
+        initDataRaw
+      );
+      console.log(JSON.stringify(parsedInitData, undefined, 2));
+      
+      const user = await createOrReturnAuthUser(
+        req.user!.id,
+        req.user!.app!.id,
+        {
+          uid: String(parsedInitData.user!.id),
+          provider: "telegram",
+        }
+      );
+      if (user) {
+        const token = jsonwebtoken.sign(
+          { userId: user.uid, appId: req.user!.app!.id, isVerified: true },
+          SECRET_KEY
+        );
+
+        req.session.set("app/jwt", token);
+
+        return reply
+          .setCookie("app/jwt", token, { path: "/", httpOnly: true })
+          .send({
+            token,
+            user: await safeAuthUserSchema.parseAsync(user),
+          });
+      }
+
+      return reply.status(403).send({
+        message: "Unauthorized app or user",
       });
     })
     .catch(requestErrorHandler(reply));
@@ -237,7 +282,7 @@ const createAnonymousUser = (req: FastifyRequest, reply: FastifyReply) =>
     .then(async (user) => {
       if (user) {
         const token = jsonwebtoken.sign(
-          { userId: user.uid, appId: req.user!.app!.id, isVerified: true },
+          { userId: user.id, appId: req.user!.app!.id, isVerified: true },
           SECRET_KEY
         );
 
@@ -264,6 +309,12 @@ export const registerAuthUsersRoutes = (app: FastifyInstance) => {
       url: "/apps/auth/anonymous/",
       preHandler: passport.authenticate(["app/token"]),
       handler: createAnonymousUser,
+    })
+    .route({
+      method: "POST",
+      url: "/apps/auth/telegram/",
+      preHandler: passport.authenticate(["app/token"]),
+      handler: telegramAuthenticationRoute,
     })
     .route({
       method: "POST",
