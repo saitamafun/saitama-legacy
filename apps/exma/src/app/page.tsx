@@ -17,8 +17,12 @@ import ClientOnly from "../components/ClientOnly";
 import ErrorMessage from "../components/ErrorMessage";
 
 export default async function HomePage(props: Record<string, any>) {
-  const pathname = headers().get("x-current-pathname");
-  const [, telegramInitData] = pathname.split(/#tgWebAppData/);
+  const pathname = headers().get("x-current-pathname") ?? "";
+  console.log(pathname);
+
+  let telegramInitData: string | undefined;
+
+  if (pathname) [, telegramInitData] = pathname.split(/#tgWebAppData/);
 
   console.log(telegramInitData);
 
@@ -103,7 +107,7 @@ export default async function HomePage(props: Record<string, any>) {
     wallets && wallets.length > 0
       ? await fetchTokenPorfolio(connection, umi, wallets.at(0)!.publicKey)
       : undefined;
-    
+
   const nftPortfolio =
     wallets && wallets.length > 0
       ? await fetchNFTPortfolio(umi, wallets.at(0)!.publicKey)
