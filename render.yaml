@@ -18,31 +18,6 @@ services:
           property: connectionString
     domains:
       - "v1.api.gateway.saitama.fun"
-  - type: web
-    name: bird 
-    runtime: node
-    plan: starter
-    autoDeploy: true
-    buildCommand: bun run build
-    startCommand: bun run migrate && bun run start
-    buildFilter:
-      paths:
-        - servers/bird/**/*.ts
-        - packages/tsconfig/*.json
-    envVars:
-      - fromGroup: servers/bird 
-      - key: DATABASE_URL
-        fromDatabase:
-          name: birdDB
-          property: connectionString 
-      - key: APP_URL
-        fromService:
-          type: web
-          name: exma
-          envVarKey: RENDER_EXTERNAL_URL
-    domains: 
-      - "bot.gateway.saitama.fun"
-      
   # - type: worker
   #   name: watchdog
   #   runtime: docker
@@ -92,10 +67,5 @@ services:
       - wallet.saitama.fun
 databases:
   - name: kamikazeDB
-    databaseName: kamikaze
-    user: admin
-    plan: starter
-  - name: birdDB
-    databaseName: bird
     user: admin
     plan: starter
