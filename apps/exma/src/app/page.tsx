@@ -103,7 +103,7 @@ export default async function HomePage(props: Record<string, any>) {
     wallets && wallets.length > 0
       ? await fetchTokenPorfolio(connection, umi, wallets.at(0)!.publicKey)
       : undefined;
-
+    
   const nftPortfolio =
     wallets && wallets.length > 0
       ? await fetchNFTPortfolio(umi, wallets.at(0)!.publicKey)

@@ -1,10 +1,10 @@
 "use client";
+import { SDKProvider } from "@telegram-apps/sdk-react";
 import { ServerExmaProvider, type EmbeddedWallet } from "@saitamafun/wallet";
 import { PermissionProvider } from "@saitamafun/wallet/providers/server";
 
 import ExmaModal from "./ExmaModal";
 import React from "react";
-import { SDKProvider } from "@telegram-apps/sdk-react";
 
 type ClientOnlyProps = {
   wallets: EmbeddedWallet[];
