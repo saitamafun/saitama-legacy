@@ -25,9 +25,7 @@ RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn ins
 
 COPY --from=deps /usr/src/app/out/full/ .
 
-WORKDIR /apps/exma
-
-RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn install
+RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn cd apps/exma && yarn install
 
 RUN yarn turbo run build --filter=exma
 
