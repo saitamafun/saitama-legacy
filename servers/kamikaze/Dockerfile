@@ -6,7 +6,7 @@ RUN apk upgrade && \
     apk add libgcc libstdc++ && \ 
     apk add make gcc g++ python3
 
-RUN yarn global add turbo
+RUN yarn global add turbo@2.0.12
 
 FROM base as builder
 
