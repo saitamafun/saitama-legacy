@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.2
 
-FROM node:18-alpine as base 
+FROM node:22-alpine3.19 as base 
 
 RUN apk update && \
     apk add libc6-compat && \
@@ -24,9 +24,6 @@ COPY --from=deps /usr/src/app/out/json/ .
 RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn install --frozen-lockfile
 
 COPY --from=deps /usr/src/app/out/full/ .
-
-RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn cd apps/exma && yarn install
-
 RUN yarn turbo run build --filter=exma
 
 FROM base as runner 
