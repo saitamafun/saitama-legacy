@@ -5,8 +5,11 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 import { SECRET_KEY } from "@/config";
 import { insertUserSchema } from "@/db/zod";
-import { createUser } from "../user/user.controller";
+
 import { requestErrorHandler } from "@/lib/errorHandler";
+
+import { createUser } from "../user/user.controller";
+import { cleanUserSchema } from "../user/user.schema";
 
 import { authBodySchema } from "./auth.schema";
 import { authenticateWithEmailAndPassword } from "./auth.controller";
@@ -20,7 +23,7 @@ const signUpRoute = (
     .then(async (body) => {
       body.password = await bcrypt.hash(body.password, 10);
       const [user] = await createUser(body);
-      return user;
+      return cleanUserSchema.safeParse(user);
     })
     .catch(requestErrorHandler(reply));
 
@@ -44,7 +47,9 @@ const signInRoute = (
           },
           SECRET_KEY
         );
-        return reply.setCookie("jwt", token).send({ token });
+        return reply
+          .setCookie("jwt", token)
+          .send({ token, user: cleanUserSchema.safeParse(user) });
       }
       return reply.status(403).send({ message: "Invalid email or password" });
     })

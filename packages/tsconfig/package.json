@@ -11,5 +11,8 @@
     "./web": {
       "default": "./tsconfig.web.json"
     }
+  },
+  "dependencies": {
+    "@tsconfig/bun": "^1.0.7"
   }
 }
