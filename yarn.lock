@@ -3853,7 +3853,7 @@
   resolved "https://registry.npmjs.org/@tsconfig/bun/-/bun-1.0.7.tgz"
   integrity sha512-udGrGJBNQdXGVulehc1aWT73wkR9wdaGBtB6yL70RJsqwW/yJhIg6ZbRlPOfIUiFNrnBuYLBi9CSmMKfDC7dvA==
 
-"@tsconfig/recommended@^1.0.5", "@tsconfig/recommended@^1.0.7":
+"@tsconfig/recommended@^1.0.5":
   version "1.0.7"
   resolved "https://registry.npmjs.org/@tsconfig/recommended/-/recommended-1.0.7.tgz"
   integrity sha512-xiNMgCuoy4mCL4JTywk9XFs5xpRUcKxtWEcMR6FNMtsgewYTIgIR+nvlP4A4iRCAzRsHMnPhvTRrzp4AGcRTEA==
@@ -8776,7 +8776,7 @@ neo-async@^2.5.0:
   resolved "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-next@^14.2.5, next@^14.2.7:
+next@^14.2.5:
   version "14.2.7"
   resolved "https://registry.npmjs.org/next/-/next-14.2.7.tgz"
   integrity sha512-4Qy2aK0LwH4eQiSvQWyKuC7JXE13bIopEQesWE0c/P3uuNRnZCQanI0vsrMLmUQJLAto+A+/8+sve2hd+BQuOQ==
