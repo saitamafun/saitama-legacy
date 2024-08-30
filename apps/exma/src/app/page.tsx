@@ -2,30 +2,15 @@ import cookie from "cookie";
 import { Connection } from "@solana/web3.js";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 
-import { cookies, headers } from "next/headers";
-import {
-  AuthUserApi,
-  fetchTokenPorfolio,
-  fetchNFTPortfolio,
-  type EmbeddedWallet,
-  Api,
-  type User,
-} from "@saitamafun/wallet/lib";
+import { cookies } from "next/headers";
+import { AuthUserApi, type User } from "@saitamafun/wallet/lib";
 
 import { getConfig, isConfigValid } from "../config";
-import ClientOnly from "../components/ClientOnly";
 import ErrorMessage from "../components/ErrorMessage";
+import useServerProps from "../composables/useServerProps";
+import TelegramProvider from "../providers/TelegramProvider";
 
 export default async function HomePage(props: Record<string, any>) {
-  const pathname = headers().get("x-current-pathname") ?? "";
-  console.log(pathname);
-
-  let telegramInitData: string | undefined;
-
-  if (pathname) [, telegramInitData] = pathname.split(/#tgWebAppData/);
-
-  console.log(telegramInitData);
-
   const config = getConfig(props.searchParams.hash);
   const firstPartyCookies = cookie.parse(
     props.searchParams.cookies ? decodeURI(props.searchParams.cookies) : ""
@@ -56,72 +41,32 @@ export default async function HomePage(props: Record<string, any>) {
   const umi = createUmi(config.rpcEndpoint);
   const connection = new Connection(config.rpcEndpoint);
 
-  const getTgUser = () => {
-    const accessToken = cookies().get("accessToken");
-
-    if (accessToken && accessToken.value) {
-      const api = new AuthUserApi(config.endpoint, accessToken.value);
-
-      const user = api.user
-        .get("me")
-        .then(({ data }) => data)
-        .catch(() => null);
-      if (user) return user;
-    }
-
-    if (telegramInitData) {
-      const api = new Api(config.endpoint, config.accessToken);
-      return api.auth
-        .telegramAuthentication(telegramInitData)
-        .then(({ data: { token, user } }) => {
-          cookies().set("accessToken", token);
-          firstPartyCookies.accessToken = token;
-          return user;
-        })
-        .catch(() => null);
-    }
-
-    return undefined;
-  };
-
-  const tgUser = await getTgUser();
-
   const api = new AuthUserApi(
     config.endpoint,
     firstPartyCookies.accessToken,
     cookies().toString()
   );
 
-  const user: User = tgUser
-    ? tgUser
-    : await api.user
-        .get("me")
-        .then(({ data }) => data)
-        .catch(() => null);
+  const user: User = await api.user
+    .get("me")
+    .then(({ data }) => data)
+    .catch(() => null);
 
-  const wallets = user
-    ? await api.wallet.getPlainWallets()
-    : new Array<EmbeddedWallet>();
-
-  const porfolio =
-    wallets && wallets.length > 0
-      ? await fetchTokenPorfolio(connection, umi, wallets.at(0)!.publicKey)
-      : undefined;
-
-  const nftPortfolio =
-    wallets && wallets.length > 0
-      ? await fetchNFTPortfolio(umi, wallets.at(0)!.publicKey)
-      : undefined;
+  const [wallets, porfolio, nftPortfolio] = await useServerProps({
+    api,
+    connection,
+    umi,
+    user,
+  });
 
   return (
-    <ClientOnly
+    <TelegramProvider
       user={user}
       config={config}
       wallets={wallets}
       portfolio={{ data: porfolio }}
       nftPortfolio={{ data: nftPortfolio }}
       firstPartyCookies={firstPartyCookies}
-      isTelegramContext={Boolean(telegramInitData)}
     />
   );
 }

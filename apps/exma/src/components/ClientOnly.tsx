@@ -9,7 +9,7 @@ import React from "react";
 type ClientOnlyProps = {
   wallets: EmbeddedWallet[];
   config: Record<string, any>;
-  isTelegramContext: boolean;
+  isTelegramContext?: boolean;
 } & Omit<
   React.ComponentProps<typeof ServerExmaProvider>,
   "rpcURL" | "token" | "baseURL" | "wallets"
