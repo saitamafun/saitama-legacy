@@ -59,7 +59,9 @@ export default function TelegramProvider({
   const fetchProps = useCallback(async () => {
     if (location) {
       const [, initData] = location.href.split(/#tgWebAppData=/);
-      props.user = await getUser(initData);
+      props.user = await getUser(
+        initData ? decodeURIComponent(initData) : undefined
+      );
       if (props.user) {
         const accessToken = cookies.get("accessToken");
         const api = new AuthUserApi(config.endpoint, accessToken);
