@@ -1,5 +1,4 @@
 "use client";
-import { SDKProvider } from "@telegram-apps/sdk-react";
 import { ServerExmaProvider, type EmbeddedWallet } from "@saitamafun/wallet";
 import { PermissionProvider } from "@saitamafun/wallet/providers/server";
 
@@ -9,7 +8,6 @@ import React from "react";
 type ClientOnlyProps = {
   wallets: EmbeddedWallet[];
   config: Record<string, any>;
-  isTelegramContext?: boolean;
 } & Omit<
   React.ComponentProps<typeof ServerExmaProvider>,
   "rpcURL" | "token" | "baseURL" | "wallets"
@@ -19,18 +17,7 @@ type ClientOnlyProps = {
     "connection" | "open" | "setOpen" | "api"
   >;
 
-export default function ClientOnly({
-  config,
-  isTelegramContext,
-  ...props
-}: ClientOnlyProps) {
-  const TelegramProvider = ({ children }: React.PropsWithChildren) =>
-    isTelegramContext ? (
-      <SDKProvider>{children}</SDKProvider>
-    ) : (
-      <React.Fragment>{children}</React.Fragment>
-    );
-
+export default function ClientOnly({ config, ...props }: ClientOnlyProps) {
   return (
     <PermissionProvider>
       <ServerExmaProvider
@@ -39,9 +26,7 @@ export default function ClientOnly({
         rpcURL={config.rpcEndpoint}
         {...props}
       >
-        <TelegramProvider>
-          <ExmaModal {...props} />
-        </TelegramProvider>
+        <ExmaModal {...props} />
       </ServerExmaProvider>
     </PermissionProvider>
   );

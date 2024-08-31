@@ -1,3 +1,22 @@
-import {parse} from "@telegram-apps/init-data-node"
+import crypto from "crypto";
+import { TELEGRAM_ACCESS_TOKEN } from "@/config";
+import { parse, sign, signData, validate } from "@telegram-apps/init-data-node";
 
-console.log(parse(decodeURIComponent("query_id%3DAAFq8ExpAgAAAGrwTGlSVn1g%26user%3D%257B%2522id%2522%253A6061617258%252C%2522first_name%2522%253A%2522%25E9%25AC%25BC%25E3%2582%25B5%25E3%2582%25A4%25E3%2583%259C%25E3%2583%25BC%25E3%2582%25B0%2522%252C%2522last_name%2522%253A%2522%2522%252C%2522username%2522%253A%2522onisaibogu%2522%252C%2522language_code%2522%253A%2522en%2522%252C%2522allows_write_to_pm%2522%253Atrue%257D%26auth_date%3D1725112403%26hash%3Dc79552bcf9bc9c37b9a721e04490c20a4c685302eeba759710435552fffc1f14&tgWebAppVersion=7.6&tgWebAppPlatform=ios&tgWebAppThemeParams=%7B%22secondary_bg_color%22%3A%22%23000000%22%2C%22hint_color%22%3A%22%2398989e%22%2C%22section_bg_color%22%3A%22%231c1c1d%22%2C%22accent_text_color%22%3A%22%233e88f7%22%2C%22text_color%22%3A%22%23ffffff%22%2C%22subtitle_text_color%22%3A%22%2398989e%22%2C%22link_color%22%3A%22%233e88f7%22%2C%22section_header_text_color%22%3A%22%238d8e93%22%2C%22button_text_color%22%3A%22%23ffffff%22%2C%22button_color%22%3A%22%233e88f7%22%2C%22destructive_text_color%22%3A%22%23eb5545%22%2C%22bg_color%22%3A%22%23000000%22%2C%22header_bg_color%22%3A%22%231a1a1a%22%2C%22section_separator_color%22%3A%22%23545458%22%7D")))
+const data = parse(
+  decodeURIComponent(
+    "query_id%3DAAFq8ExpAgAAAGrwTGmOqt6C%26user%3D%257B%2522id%2522%253A6061617258%252C%2522first_name%2522%253A%2522%25E9%25AC%25BC%25E3%2582%25B5%25E3%2582%25A4%25E3%2583%259C%25E3%2583%25BC%25E3%2582%25B0%2522%252C%2522last_name%2522%253A%2522%2522%252C%2522username%2522%253A%2522onisaibogu%2522%252C%2522language_code%2522%253A%2522en%2522%252C%2522allows_write_to_pm%2522%253Atrue%257D%26auth_date%3D1725114690%26hash%3Dcfeaf8a5ebed2f597456f172aedb7191faa1761817dd14e569b0f93d4de58314"
+  )
+);
+
+// console.log(data);
+
+const q = new URLSearchParams([
+  ["query_id", data.queryId!],
+  ["user", JSON.stringify(data.user)],
+  ["auth_date", data.authDate.getSeconds().toString()],
+  ["hash", data.hash],
+]).toString();
+
+console.log(signData(q, TELEGRAM_ACCESS_TOKEN));
+
+// console.log(validate(data, TELEGRAM_ACCESS_TOKEN, { expiresIn: 0 }));
