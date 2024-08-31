@@ -34,7 +34,7 @@ export default function TelegramProvider({
   const { href } = location;
   const [, telegramInitData] = href.split(/#tgWebAppData/);
 
-  alert(telegramInitData);
+  alert(telegramInitData); /// remove this after
 
   const getUser = (): Promise<User | undefined> => {
     const accessToken = cookies.get("accessToken");
