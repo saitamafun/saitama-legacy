@@ -3,10 +3,8 @@ import clsx from "clsx";
 import { Lato, Open_Sans } from "next/font/google";
 import "@saitamafun/wallet/css/index.css";
 
-import type { Metadata } from "next";
-
 import "../index.css";
-import ErudaProvider from "../providers/ErudaProvider";
+import type { Metadata } from "next";
 
 const defaultFont = Open_Sans({
   weight: ["400", "500", "700"],
@@ -47,7 +45,7 @@ export default function App({ children }: React.PropsWithChildren) {
           "fixed inset-0 flex flex-col font-sans"
         )}
       >
-        <ErudaProvider>{children}</ErudaProvider>
+        {children}
       </body>
     </html>
   );
