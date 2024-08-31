@@ -6,9 +6,9 @@ import { Api, AuthUserApi, type User } from "@saitamafun/wallet";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 
 import type { getConfig } from "../config";
+import type { LoadingState } from "../types";
 import ClientOnly from "../components/ClientOnly";
 import useServerProps from "../composables/useServerProps";
-import type { LoadingState } from "../types";
 import useLocation from "../composables/useLocation";
 
 type TelegramProviderProps = {
@@ -19,24 +19,10 @@ export default function TelegramProvider({
   config,
   ...props
 }: TelegramProviderProps) {
-  if (props.user)
-    return (
-      <ClientOnly
-        config={config}
-        {...props}
-      />
-    );
-
+  const [state, setState] = useState<LoadingState>("idle");
   const location = useLocation();
 
-  if (!location) return;
-
-  const { href } = location;
-  const [, telegramInitData] = href.split(/#tgWebAppData/);
-
-  alert(telegramInitData); /// remove this after
-
-  const getUser = (): Promise<User | undefined> => {
+  const getUser = (initData?: string | null): Promise<User | undefined> => {
     const accessToken = cookies.get("accessToken");
 
     if (accessToken) {
@@ -52,10 +38,10 @@ export default function TelegramProvider({
       if (user) return user;
     }
 
-    if (telegramInitData) {
+    if (initData) {
       const api = new Api(config.endpoint, config.accessToken);
       return api.auth
-        .telegramAuthentication(telegramInitData)
+        .telegramAuthentication(initData)
         .then(({ data: { token, user } }) => {
           cookies.set("accessToken", token);
           props.firstPartyCookies.accessToken = token;
@@ -70,18 +56,19 @@ export default function TelegramProvider({
   const connection = new Connection(config.rpcEndpoint);
   const umi = createUmi(connection);
 
-  const [state, setState] = useState<LoadingState>("idle");
-
   const fetchProps = useCallback(async () => {
-    props.user = await getUser();
-    if (props.user) {
-      const accessToken = cookies.get("accessToken");
-      const api = new AuthUserApi(config.endpoint, accessToken);
+    if (location) {
+      const [, initData] = location.href.split(/#tgWebAppData=/);
+      props.user = await getUser(initData);
+      if (props.user) {
+        const accessToken = cookies.get("accessToken");
+        const api = new AuthUserApi(config.endpoint, accessToken);
 
-      [props.wallets, props.portfolio.data, props.nftPortfolio.data] =
-        await useServerProps({ api, connection, umi, user: props.user });
+        [props.wallets, props.portfolio.data, props.nftPortfolio.data] =
+          await useServerProps({ api, connection, umi, user: props.user });
+      }
     }
-  }, [props]);
+  }, [location]);
 
   useEffect(() => {
     setState("loading");
@@ -93,13 +80,14 @@ export default function TelegramProvider({
   if (["idle", "loading"].includes(state))
     return (
       <div className="flex-1 flex flex-col">
-        <div className="m-auto w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
+        <div className="m-auto w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin dark:border-white dark:border-t-transparent" />
       </div>
     );
   else
     return (
       <ClientOnly
         config={config}
+        isTelegramContext
         {...props}
       />
     );

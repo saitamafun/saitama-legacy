@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { AuthUserApi, type User } from "@saitamafun/wallet/lib";
 
 import { getConfig, isConfigValid } from "../config";
+import ClientOnly from "../components/ClientOnly";
 import ErrorMessage from "../components/ErrorMessage";
 import useServerProps from "../composables/useServerProps";
 import TelegramProvider from "../providers/TelegramProvider";
@@ -59,7 +60,16 @@ export default async function HomePage(props: Record<string, any>) {
     user,
   });
 
-  return (
+  return user ? (
+    <ClientOnly
+      user={user}
+      config={config}
+      wallets={wallets}
+      portfolio={{ data: porfolio }}
+      nftPortfolio={{ data: nftPortfolio }}
+      firstPartyCookies={firstPartyCookies}
+    />
+  ) : (
     <TelegramProvider
       user={user}
       config={config}

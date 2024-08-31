@@ -82,7 +82,12 @@ const createFastifyInstance = () => {
     },
   });
   fastify.register(fastifyCors, {
-    origin: [/\.saitama\.fun$/, /\.tekfinance\.fun$/, /localhost/],
+    origin: [
+      /\.saitama\.fun$/,
+      /\.tekfinance\.fun$/,
+      /localhost/,
+      /172.20.10.2/,
+    ],
     credentials: true,
   });
   fastify.register(fastifySecureSession, {

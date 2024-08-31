@@ -17,7 +17,7 @@ export class Api {
       credentials: "include",
       mode: "cors",
       headers: {
-        Authorization: "Bearer" + this.token,
+        Authorization: "Bearer " + this.token,
       },
     });
 

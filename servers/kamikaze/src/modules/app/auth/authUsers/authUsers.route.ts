@@ -235,7 +235,7 @@ const telegramAuthenticationRoute = async (
         initDataRaw
       );
       console.log(JSON.stringify(parsedInitData, undefined, 2));
-      
+
       const user = await createOrReturnAuthUser(
         req.user!.id,
         req.user!.app!.id,

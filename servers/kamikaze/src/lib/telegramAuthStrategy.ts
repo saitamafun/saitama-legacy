@@ -27,6 +27,7 @@ export const validateAsync = async (accessToken: string, initDataRaw: string) =>
       validate(initDataRaw, accessToken);
       return resolve(parse(initDataRaw));
     } catch (error) {
+      console.log(error)
       return reject(error);
     }
   });

@@ -16,7 +16,7 @@ export default function useLocation() {
       window.addEventListener("hashchange", onHashChange);
       return () => window.removeEventListener("hashchange", onHashChange);
     }
-  }, [setLocation]);
+  }, [onHashChange]);
 
   return location;
 }
