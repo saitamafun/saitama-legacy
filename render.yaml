@@ -8,6 +8,7 @@ services:
     buildFilter:
       paths:
         - servers/kamikaze/**/*.ts
+        - servers/kamikaze/Dockerfile
         - contracts/bofio/**/*.ts
         - packages/tsconfig/*.json
     envVars:
@@ -47,6 +48,8 @@ services:
     buildFilter:
       paths:
         - apps/exma/**/*.ts
+        - apps/exma/**/*.tsx
+        - apps/exma/Dockerfile
         - packages/tsconfig/*.json
         - packages/wallet/**/*.ts
         - contracts/bofio/**/*.ts
