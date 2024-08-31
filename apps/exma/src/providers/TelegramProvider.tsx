@@ -1,7 +1,6 @@
 "use client";
 import cookies from "js-cookie";
 import { Connection } from "@solana/web3.js";
-import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Api, AuthUserApi, type User } from "@saitamafun/wallet";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
@@ -10,6 +9,7 @@ import type { getConfig } from "../config";
 import ClientOnly from "../components/ClientOnly";
 import useServerProps from "../composables/useServerProps";
 import type { LoadingState } from "../types";
+import useLocation from "../composables/useLocation";
 
 type TelegramProviderProps = {
   config: ReturnType<typeof getConfig>;
@@ -27,9 +27,9 @@ export default function TelegramProvider({
       />
     );
 
-  const pathname = usePathname();
-  alert(pathname);
-  const [, telegramInitData] = pathname.split(/#tgWebAppData/);
+  const { href } = useLocation();
+  console.log(href);
+  const [, telegramInitData] = href.split(/#tgWebAppData/);
 
   alert(telegramInitData);
 
@@ -90,7 +90,7 @@ export default function TelegramProvider({
   if (["idle", "loading"].includes(state))
     return (
       <div className="flex-1 flex flex-col">
-        <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
+        <div className="m-auto w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
       </div>
     );
   else
