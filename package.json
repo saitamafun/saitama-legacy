@@ -7,6 +7,8 @@
     "clean": "rimraf -rf node_modules .turbo dist out */*/.turbo */packages/dist */*/.next */*/node_modules"
   },
   "dependencies": {
+    "@telegram-apps/sdk-react": "^1.1.3",
+    "js-cookies": "^1.0.4",
     "tsup": "^8.2.4",
     "turbo": "^2.1.0",
     "typescript": "latest"
