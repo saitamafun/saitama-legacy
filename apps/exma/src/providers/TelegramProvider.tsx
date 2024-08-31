@@ -27,8 +27,11 @@ export default function TelegramProvider({
       />
     );
 
-  const { href } = useLocation();
-  console.log(href);
+  const location = useLocation();
+
+  if (!location) return;
+
+  const { href } = location;
   const [, telegramInitData] = href.split(/#tgWebAppData/);
 
   alert(telegramInitData);
