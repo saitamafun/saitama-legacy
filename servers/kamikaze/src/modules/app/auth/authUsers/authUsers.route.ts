@@ -229,13 +229,10 @@ const telegramAuthenticationRoute = async (
   telegramAuthenticationSchema
     .parseAsync(req.body)
     .then(async ({ initDataRaw }) => {
-      console.log("telegram=", initDataRaw);
       const parsedInitData = await validateAsync(
         TELEGRAM_ACCESS_TOKEN,
         initDataRaw
       );
-      console.log(JSON.stringify(parsedInitData, undefined, 2));
-
       const user = await createOrReturnAuthUser(
         req.user!.id,
         req.user!.app!.id,

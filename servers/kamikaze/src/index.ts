@@ -39,7 +39,6 @@ const extractJwtFromCookiesOrAsBearerToken =
     const signedToken = request.cookies[cookieName]!;
     if (signedToken) {
       const token = request.unsignCookie(signedToken);
-      console.log(token);
       if (token.valid) return token.value;
     }
     const authorization = request.headers.authorization;
