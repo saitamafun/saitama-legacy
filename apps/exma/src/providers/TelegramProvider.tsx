@@ -79,7 +79,6 @@ function InnerTelegramProvider({
         .telegramAuthentication(initData)
         .then(({ data: { token, user } }) => {
           cookies.set("accessToken", token);
-          props.firstPartyCookies.accessToken = token;
           return user;
         })
         .catch(() => null);
