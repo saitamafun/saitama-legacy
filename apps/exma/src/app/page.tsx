@@ -64,10 +64,6 @@ export default async function HomePage(props: Record<string, any>) {
     user,
   });
 
-  console.log(
-    SafeJson.stringify({ wallets, porfolio, nftPortfolio }, 2)
-  );
-
   return user ? (
     <ClientOnly
       user={user}
