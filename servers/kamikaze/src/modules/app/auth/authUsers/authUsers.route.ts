@@ -51,7 +51,7 @@ const authenticateRoute = async (
 
       if (user) {
         const token = jsonwebtoken.sign(
-          { userId: user.uid, appId: req.user!.app!.id, isVerified: true },
+          { userId: user.id, appId: req.user!.app!.id, isVerified: true },
           SECRET_KEY
         );
 
@@ -246,7 +246,7 @@ const telegramAuthenticationRoute = async (
       );
       if (user) {
         const token = jsonwebtoken.sign(
-          { userId: user.uid, appId: req.user!.app!.id, isVerified: true },
+          { userId: user.id, appId: req.user!.app!.id, isVerified: true },
           SECRET_KEY
         );
 

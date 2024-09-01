@@ -20,7 +20,7 @@ export const authUsers = pgTable(
   "authUsers",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    uid: text("uid").notNull(), // unique in 1st or 3rd party context 
+    uid: text("uid").notNull(), // unique in 1st or 3rd party context
     email: text("email"),
     provider: text("provider").notNull(),
     auth: uuid("auth")
@@ -33,5 +33,6 @@ export const authUsers = pgTable(
   },
   (columns) => ({
     unique_id_auth: unique("unique_id_auth").on(columns.id, columns.auth),
+    unique_uid_auth: unique("unique_uid_auth").on(columns.uid, columns.auth),
   })
 );

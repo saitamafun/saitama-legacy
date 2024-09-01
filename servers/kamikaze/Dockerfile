@@ -40,4 +40,4 @@ WORKDIR /usr/src/app/servers/kamikaze
 
 RUN npx --yes @fastify/secure-session > secret-key
 
-CMD node dist/index.cjs
+CMD yarn migrate && node dist/index.cjs

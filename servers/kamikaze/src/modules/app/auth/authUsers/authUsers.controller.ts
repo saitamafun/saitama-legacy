@@ -22,7 +22,6 @@ export const createOrReturnAuthUser = (
     const authList = await tx
       .select({ id: auths.id })
       .from(auths)
-
       .innerJoin(
         apps,
         and(eq(apps.id, auths.app), eq(apps.id, appId), eq(apps.user, userId))
@@ -40,7 +39,7 @@ export const createOrReturnAuthUser = (
         .insert(authUsers)
         .values({ ...values, auth: auth.id })
         .onConflictDoUpdate({
-          target: [authUsers.auth, authUsers.id],
+          target: [authUsers.auth, authUsers.uid],
           set: values,
         })
         .returning();
