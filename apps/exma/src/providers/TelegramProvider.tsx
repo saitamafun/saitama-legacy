@@ -52,6 +52,10 @@ function InnerTelegramProvider({
   isTelegramContext,
   ...props
 }: TelegramProviderProps & { isTelegramContext: boolean }) {
+  const [data, setData] = useState<Omit<
+    typeof props,
+    "children" | "firstPartyCookies"
+  > | null>(null);
   const [state, setState] = useState<LoadingState>("idle");
   const initData = isTelegramContext
     ? retrieveLaunchParams().initDataRaw
@@ -91,15 +95,26 @@ function InnerTelegramProvider({
   const umi = createUmi(connection);
 
   const fetchProps = useCallback(async () => {
-    props.user = await getUser(
+    const user = await getUser(
       initData ? decodeURIComponent(initData) : undefined
     );
-    if (props.user) {
+    if (user) {
       const accessToken = cookies.get("accessToken");
       const api = new AuthUserApi(config.endpoint, accessToken);
 
-      [props.wallets, props.portfolio.data, props.nftPortfolio.data] =
-        await useServerProps({ api, connection, umi, user: props.user });
+      const [wallets, portfolio, nftPortfolio] = await useServerProps({
+        api,
+        connection,
+        umi,
+        user,
+      });
+
+      setData({
+        user,
+        wallets,
+        portfolio: { data: portfolio },
+        nftPortfolio: { data: nftPortfolio },
+      });
     }
   }, []);
 
@@ -110,7 +125,9 @@ function InnerTelegramProvider({
       .catch(() => setState("error"));
   }, [fetchProps, setState]);
 
+  console.log(data);
   console.log(props);
+  console.log(state);
 
   if (["idle", "loading"].includes(state))
     return (
@@ -122,6 +139,7 @@ function InnerTelegramProvider({
     return (
       <ClientOnly
         {...props}
+        {...data}
         config={config}
       />
     );

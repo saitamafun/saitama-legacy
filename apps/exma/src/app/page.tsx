@@ -42,9 +42,13 @@ export default async function HomePage(props: Record<string, any>) {
   const umi = createUmi(config.rpcEndpoint);
   const connection = new Connection(config.rpcEndpoint);
 
+  const accessToken = cookies().get("accessToken");
+
   const api = new AuthUserApi(
     config.endpoint,
-    firstPartyCookies.accessToken,
+    accessToken && accessToken.value
+      ? accessToken.value
+      : firstPartyCookies.accessToken,
     cookies().toString()
   );
 
@@ -59,6 +63,10 @@ export default async function HomePage(props: Record<string, any>) {
     umi,
     user,
   });
+
+  console.log(
+    JSON.stringify({ wallets, porfolio, nftPortfolio }, undefined, 2)
+  );
 
   return user ? (
     <ClientOnly
