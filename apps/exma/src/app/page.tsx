@@ -3,7 +3,7 @@ import { Connection } from "@solana/web3.js";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 
 import { cookies } from "next/headers";
-import { AuthUserApi, SafeJson, type User } from "@saitamafun/wallet/lib";
+import { AuthUserApi, type User } from "@saitamafun/wallet/lib";
 
 import { getConfig, isConfigValid } from "../config";
 import ClientOnly from "../components/ClientOnly";
