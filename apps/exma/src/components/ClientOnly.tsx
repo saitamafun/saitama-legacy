@@ -18,6 +18,8 @@ type ClientOnlyProps = {
   >;
 
 export default function ClientOnly({ config, ...props }: ClientOnlyProps) {
+  console.log(props);
+
   return (
     <PermissionProvider>
       <ServerExmaProvider

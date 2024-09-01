@@ -111,6 +111,8 @@ function InnerTelegramProvider({
       .catch(() => setState("error"));
   }, [fetchProps, setState]);
 
+  console.log(props);
+
   if (["idle", "loading"].includes(state))
     return (
       <div className="flex-1 flex flex-col">
