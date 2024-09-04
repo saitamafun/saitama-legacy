@@ -1,9 +1,10 @@
 "use client";
+
+import React from "react";
 import { ServerExmaProvider, type EmbeddedWallet } from "@saitamafun/wallet";
 import { PermissionProvider } from "@saitamafun/wallet/providers/server";
 
 import ExmaModal from "./ExmaModal";
-import React from "react";
 
 type ClientOnlyProps = {
   wallets: EmbeddedWallet[];

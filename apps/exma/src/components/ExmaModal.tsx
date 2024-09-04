@@ -1,4 +1,5 @@
 import { WalletDialog, type User } from "@saitamafun/wallet";
+
 import ProtectedRoute from "./ProtectedRoute";
 
 type ExmaModalProps = {
