@@ -270,8 +270,10 @@ const telegramAuthenticationRoute = async (
  *
  * used in context of bots or custom authentication by client
  */
-const createAnonymousUser = (req: FastifyRequest, reply: FastifyReply) =>
-  insertAuthUserSchema
+const createAnonymousUser = (req: FastifyRequest, reply: FastifyReply) => {
+  console.log(req.body);
+
+  return insertAuthUserSchema
     .parseAsync(req.body)
     .then((body) =>
       createOrReturnAuthUser(req.user!.id, req.user!.app!.id, body)
@@ -292,6 +294,7 @@ const createAnonymousUser = (req: FastifyRequest, reply: FastifyReply) =>
       }
     })
     .catch(requestErrorHandler(reply));
+};
 
 export const registerAuthUsersRoutes = (app: FastifyInstance) => {
   app
