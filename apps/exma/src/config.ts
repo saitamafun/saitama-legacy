@@ -10,6 +10,9 @@ const configSchema = object().shape({
 export const SAITAMA_API_URL =
   process.env.SAITAMA_API_URL ?? process.env.NEXT_PUBLIC_SAITAMA_API_URL;
 
+export const DEBUG =
+  "IS_PULL_REQUEST" in process.env && process.env.IS_PULL_REQUEST === "true";
+
 export const getConfig = (hash: string) => {
   const query = decodeParams(hash);
 
