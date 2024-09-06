@@ -2,6 +2,10 @@
   "name": "@saitamafun/wallet-connect",
   "version": "0.0.0",
   "main": "./src/index.ts",
+  "license": "AGPL-3.0-only",
+  "publishConfig": {
+    "@saitamafun:registry": "https://npm.pkg.github.com"
+  },
   "exports": {
     ".": {
       "types": "./src/index.tsx",

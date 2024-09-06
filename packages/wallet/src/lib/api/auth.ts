@@ -23,18 +23,20 @@ export class AuthApi extends ApiImpl {
     });
   }
 
-  telegramAuthentication(tma: string){
-    return this.xior.post<TokenWithUser>(this.buildPath("telegram"), {initDataRaw: tma})
+  telegramAuthentication(tma: string) {
+    return this.xior.post<TokenWithUser>(this.buildPath("telegram"), {
+      initDataRaw: tma,
+    });
   }
 
   /**
    *
-   * @param id
-   * - {unsafe} use this only is know `id` is unique
+   * @param uid
+   * - {unsafe} use this only is know `uid` is unique
    */
-  anonymousAuthentication(id: string, provider?: string) {
+  anonymousAuthentication(uid: string, provider?: string) {
     return this.xior.post<TokenWithUser>(this.buildPath("anonymous"), {
-      id,
+      uid,
       provider,
     });
   }

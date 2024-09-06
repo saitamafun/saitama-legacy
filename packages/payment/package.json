@@ -1,7 +1,11 @@
 {
   "name": "@saitamafun/payment",
   "version": "0.0.0",
+  "license": "AGPL-3.0-only",
   "main": "./src/index.ts",
+  "publishConfig": {
+    "@saitamafun:registry": "https://npm.pkg.github.com"
+  },
   "exports": {
     ".": {
       "types": "./src/index.tsx",

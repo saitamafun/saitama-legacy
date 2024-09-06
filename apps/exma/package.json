@@ -1,5 +1,7 @@
 {
   "name": "exma",
+  "version": "0.0.0",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "next dev",
     "build": "NEXT_TURBOPACK_TRACING=1 next build",

@@ -1,7 +1,9 @@
 {
   "name": "watchdog",
   "module": "index.ts",
+  "version": "0.0.0",
   "type": "module",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "build": "tsup index.ts --format cjs --minify --treeshake",
     "start": "bun dist/index.cjs",

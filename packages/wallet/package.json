@@ -1,8 +1,8 @@
 {
   "name": "@saitamafun/wallet",
   "version": "0.0.0",
-  "private": "true",
   "main": "./src/index.tsx",
+  "license": "AGPL-3.0-only",
   "exports": {
     ".": {
       "types": "./src/index.tsx",
@@ -36,7 +36,7 @@
     }
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "@saitamafun:registry": "https://npm.pkg.github.com/"
   },
   "repository": "https://github.com/saitamafun/saitama",
   "scripts": {

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "module": "src/index.ts",
   "type": "module",
+  "license": "AGPL-3.0-only",
   "exports": {
     ".": {
       "default": "./dist/external.cjs",

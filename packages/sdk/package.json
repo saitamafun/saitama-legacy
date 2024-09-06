@@ -2,7 +2,11 @@
   "name": "@saitamafun/sdk",
   "private": true,
   "version": "0.0.0",
+  "license": "AGPL-3.0-only",
   "main": "./dist/index.js",
+  "publishConfig": {
+    "@saitamafun:registry": "https://npm.pkg.github.com"
+  },
   "exports": {
     ".": {
       "types": "./src/index.ts",
