@@ -1,6 +1,6 @@
 {
   "name": "@saitamafun/wallet",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "./src/index.tsx",
   "license": "AGPL-3.0-only",
   "exports": {
@@ -82,11 +82,11 @@
     "@types/bs58": "^4.0.4",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.20",
     "@unocss/postcss": "^0.61.5",
+    "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
-    "unocss": "^0.61.5",
-    "typescript": "latest"
+    "typescript": "latest",
+    "unocss": "^0.61.5"
   },
   "optionalDependencies": {
     "@saitamafun/tsconfig": "*"
