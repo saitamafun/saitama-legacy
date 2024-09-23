@@ -182,6 +182,10 @@ export class SaitamaWalletAdapter extends BaseWalletAdapter {
     });
   }
 
+  async hideWallet() {
+    return this.toggleIframe(false);
+  }
+
   private onResize() {
     this.iframe!.style.position = "fixed";
     this.iframe!.width = [window.innerWidth, "px"].join("");
@@ -252,10 +256,10 @@ export class SaitamaWalletAdapter extends BaseWalletAdapter {
         if (id === key) {
           console.log(event + "[dispatch]", key);
           await subscriber(data);
-         // delete listeners[key];
+          // delete listeners[key];
         } else if (!id) {
           await subscriber(data);
-         // delete listeners[key];
+          // delete listeners[key];
         }
       }
     }
